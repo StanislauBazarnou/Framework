@@ -1,51 +1,35 @@
-import framework.CalculatorPage;
-import framework.GoogleCloudPage;
-import framework.TemporaryEmailPage;
+import framework.model.CalculatorForm;
+import framework.page.CalculatorPage;
+import framework.page.GoogleCloudPage;
+import framework.page.TemporaryEmailPage;
+import framework.service.CalculatorFormCreator;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class EmailTaskTest {
-    private WebDriver driver;
-    private TemporaryEmailPage resultPage;
-    private CalculatorPage calculatorPage;
+public class EmailTaskTest extends CommonConditions {
     private String result;
 
     public String getResult() {
         return result;
     }
 
-    @BeforeMethod(alwaysRun = true)
-    public void getSourceData() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
+    @Test
+    public void compareCostsFromDifferentSources() {
+        CalculatorForm allTestPage = CalculatorFormCreator.withDataFromProperty();
         result = new GoogleCloudPage(driver)
                 .openHomePage()
                 .fillInSearchInputLine()
                 .selectDesiredSearchResult()
                 .clickComputerEngineButton()
-                .fillNumberOfInstances()
-                .fillRequiredData()
+                .fillRequiredData(allTestPage)
                 .clickEmailEstimateButton()
                 .getEmail()
                 .addEmail()
                 .getCostInLetter();
-    }
-
-    @Test
-    public void compareCostsFromDifferentSources() {
         Assert.assertTrue(result.contains(getResult()));
         System.out.println(result + " = " + getResult());
-    }
-
-    @AfterMethod(alwaysRun = true)
-    public void browserTearDown() {
-//        driver.quit();
-        driver = null;
     }
 }

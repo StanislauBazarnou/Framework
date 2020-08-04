@@ -1,4 +1,4 @@
-package framework;
+package framework.page;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -12,8 +12,7 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class TemporaryEmailPage {
-    private WebDriver driver;
+public class TemporaryEmailPage extends AbstractPage{
 
     public static final String TEMPORARY_MAIL_URL = "https://10minutemail.com";
     public static final By MAIL_LOCATOR = By.xpath("//div[@id='copy_address']");
@@ -21,7 +20,7 @@ public class TemporaryEmailPage {
     public static final By COST_FROM_MAIL_LOCATOR = By.xpath("//*[@id='mobilepadding']/td/h2");
 
     public TemporaryEmailPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
     }
 
     public EstimatePage getEmail() {

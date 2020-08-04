@@ -1,4 +1,4 @@
-package framework;
+package framework.page;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -10,17 +10,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 
-public class EstimatePage {
-    private WebDriver driver;
+public class EstimatePage extends AbstractPage {
     private String email;
 
     public EstimatePage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
         PageFactory.initElements(driver, this);
     }
 
     public EstimatePage(WebDriver driver, String email) {
-        this.driver = driver;
+        super(driver);
         this.email = email;
         PageFactory.initElements(driver, this);
     }
@@ -39,6 +38,9 @@ public class EstimatePage {
 
     @FindBy (xpath = "//button[@aria-label='Send Email']")
     WebElement emailSendButton;
+
+    @FindBy(xpath = "//div[@class='md-list-item-text']")
+    WebElement totalCostField;
 
     public TemporaryEmailPage clickEmailEstimateButton() {
         waitVisibilityOf(emailEstimateButton);
@@ -67,5 +69,10 @@ public class EstimatePage {
 
     public void clickThroughJS(WebElement element){
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+    }
+
+    public String findTotalCost() {
+        new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(totalCostField));
+        return totalCostField.getText();
     }
 }

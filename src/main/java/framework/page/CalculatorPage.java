@@ -1,5 +1,6 @@
-package framework;
+package framework.page;
 
+import framework.model.CalculatorForm;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -9,13 +10,11 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class CalculatorPage {
-    private WebDriver driver;
+public class CalculatorPage extends AbstractPage {
     private String totalCostOnPage;
-    private static final String NUMBER_OF_INSTANCE = "4";
 
     public CalculatorPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
         PageFactory.initElements(driver, this);
     }
 
@@ -48,25 +47,26 @@ public class CalculatorPage {
         return this;
     }
 
-    public CalculatorPage fillNumberOfInstances() {
-        numberOfInstancesField.sendKeys(NUMBER_OF_INSTANCE);
-        return this;
-    }
-
-    public EstimatePage fillRequiredData() {
-        specifyOptionFromDropdownList("Operating System / Software", "Free: Debian, CentOS, CoreOS, Ubuntu, or other User Provided OS");
-        specifyOptionFromDropdownList("Machine Class", "Regular");
-        specifyOptionFromDropdownList("Machine type", "n1-standard-8 (vCPUs: 8, RAM: 30GB)");
+    public EstimatePage fillRequiredData(CalculatorForm calculatorForm) {
+        fillNumberOfInstances(calculatorForm.getNumberOfInstances());
+        specifyOptionFromDropdownList(calculatorForm.getOperatingSystemDropdown(), calculatorForm.getOperatingSystem());
+        specifyOptionFromDropdownList(calculatorForm.getMachineClassDropdown(), calculatorForm.getMachineClass());
+        specifyOptionFromDropdownList(calculatorForm.getMachineTypeDropdown(), calculatorForm.getMachineType());
         clickCheckbox(addGpuCheckbox);
-        specifyOptionFromDropdownList("Number of GPUs", "1");
-        specifyOptionFromDropdownList("GPU type", "NVIDIA Tesla V100");
-        specifyOptionFromDropdownList("Local SSD", "2x375 GB");
-        specifyOptionFromDropdownList("Datacenter location", "Frankfurt (europe-west3)");
-        specifyOptionFromDropdownList("Committed usage", "1 Year");
+        specifyOptionFromDropdownList(calculatorForm.getNumberOfGpusDropdown(), calculatorForm.getNumberOfGpus());
+        specifyOptionFromDropdownList(calculatorForm.getGpuTypeDropdown(), calculatorForm.getGpuType());
+        specifyOptionFromDropdownList(calculatorForm.getLocalSsdDropdown(), calculatorForm.getLocalSsd());
+        specifyOptionFromDropdownList(calculatorForm.getDatacenterLocationDropdown(), calculatorForm.getDatacenterLocation());
+        specifyOptionFromDropdownList(calculatorForm.getCommittedUsageDropdown(), calculatorForm.getCommittedUsage());
         clickButton(buttonAddToEstimate);
         waitVisibilityOf(totalEstimatedCost);
         totalCostOnPage = totalEstimatedCost.getText();
         return new EstimatePage(driver);
+    }
+
+    public CalculatorPage fillNumberOfInstances(String number) {
+        numberOfInstancesField.sendKeys(number);
+        return this;
     }
 
     public CalculatorPage clickCheckbox(WebElement checkbox) {
