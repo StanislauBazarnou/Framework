@@ -22,22 +22,6 @@ public class CalculatorForm {
     private final String committedUsage;
     private final String totalEstimatedCost;
 
-
-//    public CalculatorForm(int numberOfInstances, String operatingSystem, String machineClass, String machineType,
-//                          int numberOfGpus, String gpuType, String localSsd, String datacenterLocation,
-//                          String committedUsage, String totalEstimatedCost) {
-//        this.numberOfInstances = numberOfInstances;
-//        this.operatingSystem = operatingSystem;
-//        this.machineClass = machineClass;
-//        this.machineType = machineType;
-//        this.numberOfGpus = numberOfGpus;
-//        this.gpuType = gpuType;
-//        this.localSsd = localSsd;
-//        this.datacenterLocation = datacenterLocation;
-//        this.committedUsage = committedUsage;
-//        this.totalEstimatedCost = totalEstimatedCost;
-//    }
-
     public CalculatorForm(String numberOfInstances, String operatingSystemDropdown, String operatingSystem,
                           String machineClassDropdown, String machineClass, String machineTypeDropdown,
                           String machineType, String numberOfGpusDropdown, String numberOfGpus, String gpuTypeDropdown, String gpuType,
@@ -139,14 +123,22 @@ public class CalculatorForm {
     @Override
     public String toString() {
         return "CalculatorForm{" +
-                "numberOfInstances=" + numberOfInstances +
+                "numberOfInstances='" + numberOfInstances + '\'' +
+                ", operatingSystemDropdown='" + operatingSystemDropdown + '\'' +
                 ", operatingSystem='" + operatingSystem + '\'' +
+                ", machineClassDropdown='" + machineClassDropdown + '\'' +
                 ", machineClass='" + machineClass + '\'' +
+                ", machineTypeDropdown='" + machineTypeDropdown + '\'' +
                 ", machineType='" + machineType + '\'' +
-                ", numberOfGpus=" + numberOfGpus +
+                ", numberOfGpusDropdown='" + numberOfGpusDropdown + '\'' +
+                ", numberOfGpus='" + numberOfGpus + '\'' +
+                ", gpuTypeDropdown='" + gpuTypeDropdown + '\'' +
                 ", gpuType='" + gpuType + '\'' +
+                ", localSsdDropdown='" + localSsdDropdown + '\'' +
                 ", localSsd='" + localSsd + '\'' +
+                ", datacenterLocationDropdown='" + datacenterLocationDropdown + '\'' +
                 ", datacenterLocation='" + datacenterLocation + '\'' +
+                ", committedUsageDropdown='" + committedUsageDropdown + '\'' +
                 ", committedUsage='" + committedUsage + '\'' +
                 ", totalEstimatedCost='" + totalEstimatedCost + '\'' +
                 '}';
@@ -157,20 +149,28 @@ public class CalculatorForm {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CalculatorForm that = (CalculatorForm) o;
-        return numberOfInstances == that.numberOfInstances &&
-                numberOfGpus == that.numberOfGpus &&
+        return Objects.equals(numberOfInstances, that.numberOfInstances) &&
+                Objects.equals(operatingSystemDropdown, that.operatingSystemDropdown) &&
                 Objects.equals(operatingSystem, that.operatingSystem) &&
+                Objects.equals(machineClassDropdown, that.machineClassDropdown) &&
                 Objects.equals(machineClass, that.machineClass) &&
+                Objects.equals(machineTypeDropdown, that.machineTypeDropdown) &&
                 Objects.equals(machineType, that.machineType) &&
+                Objects.equals(numberOfGpusDropdown, that.numberOfGpusDropdown) &&
+                Objects.equals(numberOfGpus, that.numberOfGpus) &&
+                Objects.equals(gpuTypeDropdown, that.gpuTypeDropdown) &&
                 Objects.equals(gpuType, that.gpuType) &&
+                Objects.equals(localSsdDropdown, that.localSsdDropdown) &&
                 Objects.equals(localSsd, that.localSsd) &&
+                Objects.equals(datacenterLocationDropdown, that.datacenterLocationDropdown) &&
                 Objects.equals(datacenterLocation, that.datacenterLocation) &&
+                Objects.equals(committedUsageDropdown, that.committedUsageDropdown) &&
                 Objects.equals(committedUsage, that.committedUsage) &&
                 Objects.equals(totalEstimatedCost, that.totalEstimatedCost);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(numberOfInstances, operatingSystem, machineClass, machineType, numberOfGpus, gpuType, localSsd, datacenterLocation, committedUsage, totalEstimatedCost);
+        return Objects.hash(numberOfInstances, operatingSystemDropdown, operatingSystem, machineClassDropdown, machineClass, machineTypeDropdown, machineType, numberOfGpusDropdown, numberOfGpus, gpuTypeDropdown, gpuType, localSsdDropdown, localSsd, datacenterLocationDropdown, datacenterLocation, committedUsageDropdown, committedUsage, totalEstimatedCost);
     }
 }

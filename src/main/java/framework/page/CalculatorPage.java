@@ -29,7 +29,7 @@ public class CalculatorPage extends AbstractPage {
     @FindBy (xpath = "//*[@id='mainForm']//div[@title='Compute Engine']")
     WebElement computeEngineButton;
 
-    @FindBy (id = "input_60")
+    @FindBy (id = "input_61")
     WebElement numberOfInstancesField;
 
     @FindBy (xpath = "(//md-checkbox[@aria-label='Add GPUs' and @role='checkbox'])[1]")
