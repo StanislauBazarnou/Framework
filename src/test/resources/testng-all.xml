@@ -2,8 +2,11 @@
 
 <suite name="All tests" verbose="1" >
     <test name="All tests"   >
-        <packages>
-            <package name="EmailTaskTest" />
-        </packages>
+<!--        <packages>-->
+<!--            <package name="EmailTaskTest" />-->
+<!--        </packages>-->
+        <classes>
+            <class name="EmailTaskTest" />
+        </classes>
     </test>
 </suite>
