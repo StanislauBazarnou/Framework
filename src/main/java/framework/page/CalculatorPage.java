@@ -1,6 +1,8 @@
 package framework.page;
 
 import framework.model.CalculatorForm;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -12,6 +14,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CalculatorPage extends AbstractPage {
     private String totalCostOnPage;
+    private final Logger logger = LogManager.getRootLogger();
 
     public CalculatorPage(WebDriver driver) {
         super(driver);
@@ -44,10 +47,11 @@ public class CalculatorPage extends AbstractPage {
         driver.switchTo().frame(firstFrame).switchTo().frame(secondFrame);
         waitVisibilityOf(computeEngineButton);
         clickThroughJS(computeEngineButton);
+        logger.info("Engine button is clicked");
         return this;
     }
 
-    public EstimatePage fillRequiredData(CalculatorForm calculatorForm) {
+    public CalculatorPage fillRequiredData(CalculatorForm calculatorForm) {
         fillNumberOfInstances(calculatorForm.getNumberOfInstances());
         specifyOptionFromDropdownList(calculatorForm.getOperatingSystemDropdown(), calculatorForm.getOperatingSystem());
         specifyOptionFromDropdownList(calculatorForm.getMachineClassDropdown(), calculatorForm.getMachineClass());
@@ -58,9 +62,15 @@ public class CalculatorPage extends AbstractPage {
         specifyOptionFromDropdownList(calculatorForm.getLocalSsdDropdown(), calculatorForm.getLocalSsd());
         specifyOptionFromDropdownList(calculatorForm.getDatacenterLocationDropdown(), calculatorForm.getDatacenterLocation());
         specifyOptionFromDropdownList(calculatorForm.getCommittedUsageDropdown(), calculatorForm.getCommittedUsage());
+        logger.info("All required data is filled");
+        return new CalculatorPage(driver);
+    }
+
+    public EstimatePage clickEstimateButton() {
         clickButton(buttonAddToEstimate);
         waitVisibilityOf(totalEstimatedCost);
         totalCostOnPage = totalEstimatedCost.getText();
+        logger.info("Estimate button is clicked");
         return new EstimatePage(driver);
     }
 
@@ -82,7 +92,7 @@ public class CalculatorPage extends AbstractPage {
     }
 
     public void waitVisibilityOf(WebElement element){
-        new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(element));
+        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS).until(ExpectedConditions.visibilityOf(element));
     }
 
     public void clickThroughJS(WebElement element){

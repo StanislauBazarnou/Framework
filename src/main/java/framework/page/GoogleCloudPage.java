@@ -28,7 +28,7 @@ public class GoogleCloudPage extends AbstractPage{
 
     public GoogleCloudPage openHomePage() {
         driver.get(HOMEPAGE_URL);
-        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(searchButton));
+        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS).until(ExpectedConditions.elementToBeClickable(searchButton));
         logger.info(HOMEPAGE_URL + " was opened");
         return this;
     }
@@ -36,6 +36,7 @@ public class GoogleCloudPage extends AbstractPage{
     public SearchResultsPage fillInSearchInputLine() {
         searchButton.click();
         searchInputLine.sendKeys(REQUEST_TEXT + Keys.ENTER);
+        logger.info(REQUEST_TEXT + " put in search field");
         return new SearchResultsPage(driver);
     }
 }

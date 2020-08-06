@@ -9,6 +9,9 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import static framework.service.CalculatorFormCreator.withDataFromProperty;
+import static org.testng.Assert.assertTrue;
+
 public class EmailTaskTest extends CommonConditions {
     private String result;
 
@@ -25,11 +28,13 @@ public class EmailTaskTest extends CommonConditions {
                 .selectDesiredSearchResult()
                 .clickComputerEngineButton()
                 .fillRequiredData(allTestPage)
+                .clickEstimateButton()
                 .clickEmailEstimateButton()
                 .getEmail()
                 .addEmail()
                 .getCostInLetter();
-        Assert.assertTrue(result.contains(getResult()));
-        System.out.println(result + " = " + getResult());
+        assertTrue(getResult().contains(withDataFromProperty().getTotalEstimatedCost()));
+
+        System.out.println(result + " = " + withDataFromProperty().getTotalEstimatedCost());
     }
 }

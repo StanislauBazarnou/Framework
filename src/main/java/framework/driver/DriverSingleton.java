@@ -19,13 +19,10 @@ public class DriverSingleton {
             }
             WebDriverManager.chromedriver().setup();
             ChromeOptions options = new ChromeOptions();
-//            options.addArguments("--no-sandbox");
-//            options.addArguments("--disable-dev-shm-usage");
-            options.addArguments("--headless");
-            options.addArguments("window-size=1800x900");
+//            options.addArguments("--headless");
+//            options.addArguments("window-size=1800x900");
             driver = new ChromeDriver(options);
-//            driver.manage().window().maximize();
-
+            driver.manage().window().maximize();
         }
         return driver;
     }

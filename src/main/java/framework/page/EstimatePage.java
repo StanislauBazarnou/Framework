@@ -1,5 +1,7 @@
 package framework.page;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 
 public class EstimatePage extends AbstractPage {
     private String email;
+    private final Logger logger = LogManager.getRootLogger();
 
     public EstimatePage(WebDriver driver) {
         super(driver);
@@ -48,23 +51,25 @@ public class EstimatePage extends AbstractPage {
         ((JavascriptExecutor) driver).executeScript("window.open()");
         ArrayList<String> browserPages = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(browserPages.get(1));
+        logger.info("Email Estimate Button is clicked");
         return new TemporaryEmailPage(driver);
     }
 
     public TemporaryEmailPage addEmail() {
-        driver.switchTo().frame(firstFrameEmail).switchTo().frame(secondFrameEmail); //for what?
+        driver.switchTo().frame(firstFrameEmail).switchTo().frame(secondFrameEmail);
         waitVisibilityOf(emailField);
         emailField.sendKeys(email);
-        new WebDriverWait(driver, 20)
+        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
                 .until(ExpectedConditions.elementToBeClickable(emailSendButton));
         clickThroughJS(emailSendButton);
         ArrayList<String> browserPages = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(browserPages.get(1));
+        logger.info("Email address is add to form");
         return new TemporaryEmailPage(driver);
     }
 
     public void waitVisibilityOf(WebElement element){
-        new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(element));
+        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS).until(ExpectedConditions.visibilityOf(element));
     }
 
     public void clickThroughJS(WebElement element){
@@ -72,7 +77,8 @@ public class EstimatePage extends AbstractPage {
     }
 
     public String findTotalCost() {
-        new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(totalCostField));
+        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS).until(ExpectedConditions.visibilityOf(totalCostField));
+        logger.info("Final cost is calculated");
         return totalCostField.getText();
     }
 }

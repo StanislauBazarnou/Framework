@@ -19,6 +19,7 @@ public class SmokeTest extends CommonConditions {
                 .selectDesiredSearchResult()
                 .clickComputerEngineButton()
                 .fillRequiredData(testPage)
+                .clickEstimateButton()
                 .findTotalCost();
         assertTrue(totalCost.contains(withDataFromProperty().getTotalEstimatedCost()));
     }
