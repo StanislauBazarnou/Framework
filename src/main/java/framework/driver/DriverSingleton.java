@@ -18,11 +18,11 @@ public class DriverSingleton {
                 driver = new FirefoxDriver();
             }
             WebDriverManager.chromedriver().setup();
-//            ChromeOptions options = new ChromeOptions();
-//            options.addArguments("--headless");
-//            options.addArguments("window-size=1800x900");
-//            driver = new ChromeDriver(options);
-            driver.manage().window().maximize();
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--headless");
+            options.addArguments("window-size=1800x900");
+            driver = new ChromeDriver(options);
+//            driver.manage().window().maximize();
         }
         return driver;
     }
